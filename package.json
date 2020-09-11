@@ -1,0 +1,32 @@
+{
+  "name": "rs404",
+  "version": "1.0.0",
+  "description": "A web based game",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --mode=development --open",
+    "prod": "webpack --mode=production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "js13k",
+    "html",
+    "javascript",
+    "css",
+    "game"
+  ],
+  "author": "Ravindu Sachintha",
+  "license": "ISC",
+  "dependencies": {
+    "kontra": "^7.1.2"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.10.0",
+    "path": "^0.12.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "zip-webpack-plugin": "^3.0.0"
+  }
+}
