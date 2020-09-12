@@ -7,6 +7,7 @@ import filesize from 'rollup-plugin-filesize';
 import progress from 'rollup-plugin-progress';
 import postcss from 'rollup-plugin-postcss';
 import zip from 'rollup-plugin-zip';
+import copy from 'rollup-plugin-copy2';
 import kontra from 'rollup-plugin-kontra';
 import template from './src/template';
 
@@ -16,6 +17,7 @@ import cssnano from 'cssnano';
 export default {
     input: 'src/main.js',
     output: {
+        name: 'gameBundle',
         dir: 'dist',
         format: 'iife'
     },
@@ -31,7 +33,9 @@ export default {
             babelHelpers: 'bundled',
             exclude: 'node_modules/**'
         }),
-        terser(),
+        terser({
+            mangle: true
+        }),
         filesize({
             showBeforeSizes: false
         }),
@@ -51,7 +55,15 @@ export default {
             },
             vector: {
                 length: true
+            },
+            sprite: {
+                image: true
             }
+        }),
+        copy({
+            assets: [
+                'assets/drawing.svg'
+            ]
         }),
         zip()
     ]
