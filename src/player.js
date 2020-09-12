@@ -1,10 +1,10 @@
 import { Sprite, keyPressed, degToRad, imageAssets } from 'kontra';
-import { player } from './globals';
+import { player, BG_BRD_U, BG_BRD_D } from './globals';
 
 export function createPlayer() {
     return Sprite({
         x: 50,
-        y: 50,
+        y: (BG_BRD_D - BG_BRD_U) / 2,
         type: 'player',
         anchor: { x: 0.5, y: 0.5 },
         radius: 6,

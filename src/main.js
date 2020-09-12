@@ -2,7 +2,7 @@ import './styles.css';
 
 import { initKeys, GameLoop } from 'kontra';
 import { BG_BRD_L, BG_BRD_U, BG_BRD_R, BG_BRD_D, BG_BRD_OFS, sprites, player, loadAssets, assets } from './globals';
-import { renderBackground } from './background';
+import { renderBgSpace, createStars } from './background';
 import { createPlayer } from './player';
 
 // should remove at final build -------------------------------
@@ -21,6 +21,12 @@ function main() {
     loadAssets().then(function () {
         if (assets.assetsLoaded == assets.numOfItems) {
             initKeys(); // keyboard events initialization
+
+            let stars = createStars(80);
+            stars.forEach(function (star) {
+                sprites.push(star);
+            });
+
             let player = createPlayer();
             sprites.push(player);
 
@@ -35,7 +41,7 @@ function main() {
                     });
                 },
                 render() {
-                    renderBackground();
+                    renderBgSpace();
                     sprites.map(sprite => sprite.render());
                 }
             });

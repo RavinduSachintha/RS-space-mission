@@ -19,7 +19,7 @@ export let player = {
 };
 
 export let assets = {
-    numOfItems: 1,
+    numOfItems: 2,
     assetsLoaded: 0
 };
 
@@ -28,5 +28,5 @@ on('assetLoaded', (asset, url) => {
 });
 
 export function loadAssets() {
-    return load('assets/player.png');
+    return load('assets/player.png', 'assets/star.png');
 }
