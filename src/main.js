@@ -1,4 +1,6 @@
-import kontra, { init, Text } from 'kontra';
+import './styles.css';
+
+import { init, Text, Sprite, initKeys, keyPressed, degToRad, GameLoop } from 'kontra';
 
 const { canvas, context } = init("canvas1");
 let sprites = [];
@@ -11,6 +13,11 @@ const bg_border_r = canvas.width - bg_border_width;
 const bg_border_u = bg_border_width;
 const bg_border_d = canvas.height - bg_border_width;
 const bg_border_offset = 10;
+
+// should remove at final build -------------------------------------------------
+document.write('<script src="http://'
+    + (location.host || 'localhost').split(':')[0]
+    + ':35729/livereload.js?snipver=1"></' + 'script>');
 
 function renderBackground() {
     context.beginPath();
@@ -29,7 +36,7 @@ function renderPlayer() {
 }
 
 function createPlayer() {
-    return kontra.Sprite({
+    return Sprite({
         x: 50,
         y: 50,
         type: 'player',
@@ -39,21 +46,21 @@ function createPlayer() {
             renderPlayer();
         },
         update() {
-            if (kontra.keyPressed('left')) {
-                this.rotation += kontra.degToRad(-3);
+            if (keyPressed('left')) {
+                this.rotation += degToRad(-3);
             }
-            if (kontra.keyPressed('right')) {
-                this.rotation += kontra.degToRad(3);
+            if (keyPressed('right')) {
+                this.rotation += degToRad(3);
             }
 
             const cos = Math.cos(this.rotation);
             const sin = Math.sin(this.rotation);
 
-            if (kontra.keyPressed('s')) {
+            if (keyPressed('s')) {
                 isPlayerEnable = true;
             }
 
-            if (kontra.keyPressed('d')) {
+            if (keyPressed('d')) {
                 isPlayerEnable = false;
             }
 
@@ -82,24 +89,24 @@ function loseLife() {
 }
 
 function main() {
-    kontra.initKeys();
+    initKeys();
 
     let player = createPlayer();
     sprites.push(player);
 
     let text = Text({
-        text: 'Hello World : ' + test_count,
+        text: 'Hello World ! : ' + test_count,
         font: '12px Arial',
         color: 'red',
         x: 40,
         y: 500,
         textAlign: 'center',
         update() {
-            this.text = 'Hello World : ' + test_count;
+            this.text = 'Test Count: ' + test_count;
         }
     });
 
-    let loop = kontra.GameLoop({
+    let loop = GameLoop({
         update() {
             sprites.map(sprite => {
                 sprite.update();

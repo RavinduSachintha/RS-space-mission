@@ -1,32 +1,44 @@
 {
-  "name": "rs404",
-  "version": "1.0.0",
-  "description": "A web based game",
-  "main": "src/index.js",
-  "scripts": {
-    "dev": "webpack-dev-server --mode=development --open",
-    "prod": "webpack --mode=production",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "js13k",
-    "html",
-    "javascript",
-    "css",
-    "game"
-  ],
-  "author": "Ravindu Sachintha",
-  "license": "ISC",
-  "dependencies": {
-    "kontra": "^7.1.2"
-  },
-  "devDependencies": {
-    "html-webpack-plugin": "^4.3.0",
-    "mini-css-extract-plugin": "^0.10.0",
-    "path": "^0.12.7",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "zip-webpack-plugin": "^3.0.0"
-  }
+    "name": "rs404",
+    "version": "1.0.0",
+    "description": "A web based game",
+    "main": "src/main.js",
+    "scripts": {
+        "build": "rollup -c",
+        "dev": "rollup -c --watch",
+        "reload": "livereload 'dist/'",
+        "watch": "npm-run-all --parallel reload dev"
+    },
+    "keywords": [
+        "js13k",
+        "html",
+        "javascript",
+        "css",
+        "game"
+    ],
+    "author": "Ravindu Sachintha",
+    "license": "ISC",
+    "dependencies": {
+        "kontra": "^7.1.2"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.11.6",
+        "@babel/preset-env": "^7.11.5",
+        "@rollup/plugin-babel": "^5.2.1",
+        "@rollup/plugin-commonjs": "^15.0.0",
+        "@rollup/plugin-html": "^0.2.0",
+        "@rollup/plugin-node-resolve": "^9.0.0",
+        "@types/rollup-plugin-progress": "^1.1.0",
+        "cssnano": "^4.1.10",
+        "livereload": "^0.9.1",
+        "npm-run-all": "^4.1.5",
+        "rollup": "^2.26.11",
+        "rollup-plugin-filesize": "^9.0.2",
+        "rollup-plugin-kontra": "^1.0.1",
+        "rollup-plugin-postcss": "^3.1.8",
+        "rollup-plugin-progress": "^1.1.2",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-zip": "^1.0.1",
+        "rollup-watch": "^4.3.1"
+    }
 }
