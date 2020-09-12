@@ -1,31 +1,20 @@
-import { Sprite, keyPressed, degToRad } from 'kontra';
-import { context, player } from './globals';
-
-function renderPlayer() {
-    context.strokeStyle = 'blue';
-    context.beginPath();
-    context.moveTo(-3, -5);
-    context.lineTo(12, 0);
-    context.lineTo(-3, 5);
-    context.closePath();
-    context.stroke();
-}
+import { Sprite, keyPressed, degToRad, imageAssets } from 'kontra';
+import { player } from './globals';
 
 export function createPlayer() {
     return Sprite({
         x: 50,
         y: 50,
         type: 'player',
+        anchor: { x: 0.5, y: 0.5 },
         radius: 6,
-        render() {
-            renderPlayer();
-        },
+        image: imageAssets['assets/player'],
         update() {
             if (keyPressed('left')) {
-                this.rotation += degToRad(-3);
+                this.rotation += degToRad(-3) * (this.velocity.length() / player.maxSpeed);
             }
             if (keyPressed('right')) {
-                this.rotation += degToRad(3);
+                this.rotation += degToRad(3) * (this.velocity.length() / player.maxSpeed);
             }
 
             const cos = Math.cos(this.rotation);
@@ -50,7 +39,7 @@ export function createPlayer() {
             }
             this.advance();
 
-            if (this.velocity.length() > 3) {
+            if (this.velocity.length() > player.maxSpeed) {
                 this.dx *= 0.95;
                 this.dy *= 0.95;
             }

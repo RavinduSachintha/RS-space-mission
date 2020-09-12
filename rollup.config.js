@@ -62,7 +62,7 @@ export default {
         }),
         copy({
             assets: [
-                'assets/drawing.svg'
+                'assets/player.png'
             ]
         }),
         zip()
