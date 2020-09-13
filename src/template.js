@@ -30,7 +30,7 @@ const template = async ({ attributes, files, meta, publicPath, title }) => {
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <canvas id="canvas1" width="1200" height="600"></canvas>
+    <canvas id="canvas1" class="wrapper" width="1200" height="600"></canvas>
     ${scripts}
   </body>
 </html>`;

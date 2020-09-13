@@ -1,11 +1,10 @@
 body {
     text-align: center;
-    background-color: #c5c5c5;
+    background-color: #404040;
 }
 
 #canvas1 {
     margin-top: 20px;
-    background-color: #fff;
-    border: 1px solid black;
+    border: 1px solid gray;
     /* cursor: none; */
 }
