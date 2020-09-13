@@ -62,7 +62,7 @@ export default {
         }),
         copy({
             assets: [
-                'assets/player.png', 'assets/star.png', 'assets/enemy.png'
+                'assets/star.png', 'assets/enemy.png'
             ]
         }),
         zip()

@@ -1,7 +1,7 @@
 import './styles.css';
 
 import { initKeys, GameLoop } from 'kontra';
-import { BG_BRD_L, BG_BRD_U, BG_BRD_R, BG_BRD_D, BG_BRD_OFS, sprites, player, loadAssets, assets } from './globals';
+import { BG_BRD_L, BG_BRD_U, BG_BRD_R, BG_BRD_D, sprites, player, loadAssets, assets } from './globals';
 import { renderBgSpace, createStars, renderBgBorder } from './background';
 import { createPlayer } from './player';
 import { createEnemies } from './enemy';
@@ -38,11 +38,15 @@ function main() {
 
             let loop = GameLoop({
                 update() {
-                    sprites.map(sprite => {
+                    sprites.map((sprite, index) => {
                         sprite.update();
 
                         if (sprite.type == 'player' && (sprite.x < BG_BRD_L || sprite.x > BG_BRD_R || sprite.y < BG_BRD_U || sprite.y > BG_BRD_D)) {
                             loseLife();
+                        }
+
+                        if (sprite.type == 'bullet' && (sprite.x < BG_BRD_L || sprite.x > BG_BRD_R || sprite.y < BG_BRD_U || sprite.y > BG_BRD_D)) {
+                            sprites.splice(index, 1);
                         }
                     });
                 },
