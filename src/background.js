@@ -18,9 +18,9 @@ export function renderBgBorder() {
     context.strokeRect(BG_BRD_L / 2, BG_BRD_U / 2, BG_BRD_R, BG_BRD_D);
 }
 
-export function createStars(size) {
+export function createStars(count) {
     let starsList = [];
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < count; i++) {
         const star = Sprite({
             x: (Math.random() * (BG_BRD_R - BG_BRD_L - 75)) + 50,
             y: (Math.random() * (BG_BRD_D - BG_BRD_U - 75)) + 50,

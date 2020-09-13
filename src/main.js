@@ -4,6 +4,7 @@ import { initKeys, GameLoop } from 'kontra';
 import { BG_BRD_L, BG_BRD_U, BG_BRD_R, BG_BRD_D, BG_BRD_OFS, sprites, player, loadAssets, assets } from './globals';
 import { renderBgSpace, createStars, renderBgBorder } from './background';
 import { createPlayer } from './player';
+import { createEnemies } from './enemy';
 
 // should remove at final build -------------------------------
 document.write('<script src="http://'
@@ -25,6 +26,11 @@ function main() {
             let stars = createStars(80);
             stars.forEach(function (star) {
                 sprites.push(star);
+            });
+
+            let enemies = createEnemies();
+            enemies.forEach(function (enemy) {
+                sprites.push(enemy);
             });
 
             let player = createPlayer();
