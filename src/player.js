@@ -2,7 +2,9 @@ import { Sprite, keyPressed, degToRad, imageAssets } from 'kontra';
 import { player, BG_BRD_U, BG_BRD_D, sprites, context } from './globals';
 import { createBullet } from './bullet';
 
-function renderPlayer() {
+function renderPlayer(action) {
+    action = action || 'default';
+
     context.beginPath();
     context.moveTo(25, -5);
     context.lineTo(20, -12);
@@ -50,18 +52,32 @@ function renderPlayer() {
 
     context.beginPath();
     context.moveTo(9, -3);
-    context.bezierCurveTo(-8, -2, -8, 2, 9, 3);
+    if (action === 'default') {
+        context.bezierCurveTo(-8, -2, -8, 2, 9, 3);
+    } else if (action === 'turn-left') {
+        context.bezierCurveTo(-8, -5, -8, -1, 9, 3);
+    } else if (action === 'turn-right') {
+        context.bezierCurveTo(-8, 1, -8, 5, 9, 3);
+    }
     context.closePath();
     context.fillStyle = "#FFCC66";
     context.fill();
 
     context.beginPath();
     context.moveTo(9, -1.5);
-    context.bezierCurveTo(-4, -1, -4, 1, 9, 1.5);
+    if (action === 'default') {
+        context.bezierCurveTo(-4, -1, -4, 1, 9, 1.5);
+    } else if (action === 'turn-left') {
+        context.bezierCurveTo(-4, -3.5, -4, -1.5, 9, 1.5);
+    } else if (action === 'turn-right') {
+        context.bezierCurveTo(-4, 1.5, -4, 3.5, 9, 1.5);
+    }
     context.closePath();
     context.fillStyle = "#ED7161";
     context.fill();
 }
+
+
 
 export function createPlayer() {
     return Sprite({
@@ -71,14 +87,18 @@ export function createPlayer() {
         anchor: { x: 0.5, y: 0.5 },
         radius: 6,
         dt: 0,
+        action: 'default',
         render() {
-            renderPlayer();
+            renderPlayer(this.action);
         },
         update() {
+            this.action = 'default';
             if (keyPressed('left')) {
+                this.action = 'turn-left';
                 this.rotation += degToRad(-3) * (this.velocity.length() / player.maxSpeed);
             }
             if (keyPressed('right')) {
+                this.action = 'turn-right';
                 this.rotation += degToRad(3) * (this.velocity.length() / player.maxSpeed);
             }
 
