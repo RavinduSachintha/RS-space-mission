@@ -18,11 +18,12 @@ export const BG_SPC_H = BG_BRD_D - BG_BRD_U;
 export let sprites = [];
 export let player = {
     isEnable: false,
+    isDestroyed: false,
     maxSpeed: 3.5
 };
 
 export let assets = {
-    numOfItems: 2,
+    numOfItems: 1,
     assetsLoaded: 0
 };
 
@@ -31,5 +32,5 @@ on('assetLoaded', (asset, url) => {
 });
 
 export function loadAssets() {
-    return load('assets/star.png', 'assets/enemy.png');
+    return load('assets/enemy.png');
 }

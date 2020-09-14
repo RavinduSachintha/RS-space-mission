@@ -1,9 +1,19 @@
 import { Sprite, keyPressed, degToRad, imageAssets } from 'kontra';
-import { player, BG_BRD_U, BG_BRD_D, sprites, context } from './globals';
+import { player, BG_BRD_U, BG_BRD_D, BG_BRD_L, BG_BRD_R, sprites, context } from './globals';
 import { createBullet } from './bullet';
 
-function renderPlayer(action) {
+function renderPlayer(action, radius) {
     action = action || 'default';
+    radius = radius || 0;
+
+    context.translate(-24, 0);
+
+    context.beginPath();
+    context.arc(24, 0, radius, 0, Math.PI * 2);
+    context.closePath();
+    context.lineWidth = 1;
+    context.strokeStyle = "red";
+    context.stroke();
 
     context.beginPath();
     context.moveTo(25, -5);
@@ -75,9 +85,26 @@ function renderPlayer(action) {
     context.closePath();
     context.fillStyle = "#ED7161";
     context.fill();
+
+    if (action === 'destroyed') {
+        context.translate(24, 0);
+
+        context.beginPath();
+        context.moveTo(0, -30);
+        context.lineTo(10, -11);
+        context.lineTo(30, -7);
+        context.lineTo(16, 9);
+        context.lineTo(19, 30);
+        context.lineTo(0, 21);
+        context.lineTo(-19, 30);
+        context.lineTo(-16, 9);
+        context.lineTo(-30, -7);
+        context.lineTo(-10, -11);
+        context.closePath();
+        context.fillStyle = "#FFA500";
+        context.fill();
+    }
 }
-
-
 
 export function createPlayer() {
     return Sprite({
@@ -85,11 +112,11 @@ export function createPlayer() {
         y: (BG_BRD_D - BG_BRD_U) / 2,
         type: 'player',
         anchor: { x: 0.5, y: 0.5 },
-        radius: 6,
+        radius: 24,
         dt: 0,
         action: 'default',
         render() {
-            renderPlayer(this.action);
+            renderPlayer(this.action, this.radius);
         },
         update() {
             this.action = 'default';
@@ -102,12 +129,23 @@ export function createPlayer() {
                 this.rotation += degToRad(3) * (this.velocity.length() / player.maxSpeed);
             }
 
+            // if (this.dt > 0.5) {
+            //     console.log(this.x + "-" + BG_BRD_L);
+            //     this.dt = 0;
+            // }
+
+            if (this.x < BG_BRD_L || this.x > BG_BRD_R || this.y < BG_BRD_U || this.y > BG_BRD_D) {
+                player.isEnable = false;
+                player.isDestroyed = true;
+            }
+
             const cos = Math.cos(this.rotation);
             const sin = Math.sin(this.rotation);
 
             // should change later
             if (keyPressed('s')) {
                 player.isEnable = true;
+                player.isDestroyed = false;
             }
 
             if (keyPressed('d')) {
@@ -133,8 +171,12 @@ export function createPlayer() {
             this.dt += 1 / 60;
             if (keyPressed('space') && this.dt > 0.25) {
                 this.dt = 0;
-                let bullet = createBullet(this.x + cos * 20, this.y + sin * 20, this.dx + cos * 5, this.dy + sin * 5, 'yellow');
+                let bullet = createBullet(this.x + cos * 25, this.y + sin * 25, this.dx + cos * 5, this.dy + sin * 5, 'yellow');
                 sprites.push(bullet);
+            }
+
+            if (player.isDestroyed) {
+                this.action = 'destroyed';
             }
         }
     });

@@ -12,11 +12,6 @@ document.write('<script src="http://'
     + ':35729/livereload.js?snipver=1" async></' + 'script>');
 // ------------------------------------------------------------
 
-function loseLife() {
-    // temparary
-    player.isEnable = false;
-}
-
 // main game method
 function main() {
     loadAssets().then(function () {
@@ -40,10 +35,6 @@ function main() {
                 update() {
                     sprites.map((sprite, index) => {
                         sprite.update();
-
-                        if (sprite.type == 'player' && (sprite.x < BG_BRD_L || sprite.x > BG_BRD_R || sprite.y < BG_BRD_U || sprite.y > BG_BRD_D)) {
-                            loseLife();
-                        }
 
                         if (sprite.type == 'bullet' && (sprite.x < BG_BRD_L || sprite.x > BG_BRD_R || sprite.y < BG_BRD_U || sprite.y > BG_BRD_D)) {
                             sprites.splice(index, 1);
