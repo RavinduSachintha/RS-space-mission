@@ -15,7 +15,11 @@ export const BG_BRD_D = canvas.height - BG_BRD_W; // border down margin
 export const BG_SPC_W = BG_BRD_R - BG_BRD_L;
 export const BG_SPC_H = BG_BRD_D - BG_BRD_U;
 
-export let sprites = [];
+export const ENEMY_ENERGY_LVL = 50;
+
+export let sprites = {
+    items: []
+};
 export let player = {
     isEnable: false,
     isDestroyed: false,

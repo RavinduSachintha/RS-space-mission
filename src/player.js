@@ -6,14 +6,14 @@ function renderPlayer(action, radius) {
     action = action || 'default';
     radius = radius || 0;
 
-    context.translate(-24, 0);
+    context.translate(-radius, 0);
 
-    context.beginPath();
-    context.arc(24, 0, radius, 0, Math.PI * 2);
-    context.closePath();
-    context.lineWidth = 1;
-    context.strokeStyle = "red";
-    context.stroke();
+    // context.beginPath();
+    // context.arc(radius, 0, radius, 0, Math.PI * 2);
+    // context.closePath();
+    // context.lineWidth = 1;
+    // context.strokeStyle = "red";
+    // context.stroke();
 
     context.beginPath();
     context.moveTo(25, -5);
@@ -103,6 +103,21 @@ function renderPlayer(action, radius) {
         context.closePath();
         context.fillStyle = "#FFA500";
         context.fill();
+
+        context.beginPath();
+        context.moveTo(0, -15);
+        context.lineTo(5, -5.5);
+        context.lineTo(15, -3.5);
+        context.lineTo(8, 4.5);
+        context.lineTo(9.5, 15);
+        context.lineTo(0, 10.5);
+        context.lineTo(-9.5, 15);
+        context.lineTo(-8, 4.5);
+        context.lineTo(-15, -3.5);
+        context.lineTo(-5, -5.5);
+        context.closePath();
+        context.fillStyle = "#F00";
+        context.fill();
     }
 }
 
@@ -128,11 +143,6 @@ export function createPlayer() {
                 this.action = 'turn-right';
                 this.rotation += degToRad(3) * (this.velocity.length() / player.maxSpeed);
             }
-
-            // if (this.dt > 0.5) {
-            //     console.log(this.x + "-" + BG_BRD_L);
-            //     this.dt = 0;
-            // }
 
             if (this.x < BG_BRD_L || this.x > BG_BRD_R || this.y < BG_BRD_U || this.y > BG_BRD_D) {
                 player.isEnable = false;
@@ -172,7 +182,7 @@ export function createPlayer() {
             if (keyPressed('space') && this.dt > 0.25) {
                 this.dt = 0;
                 let bullet = createBullet(this.x + cos * 25, this.y + sin * 25, this.dx + cos * 5, this.dy + sin * 5, 'yellow');
-                sprites.push(bullet);
+                sprites.items.push(bullet);
             }
 
             if (player.isDestroyed) {

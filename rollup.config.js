@@ -58,7 +58,8 @@ export default {
             },
             sprite: {
                 image: true
-            }
+            },
+            debug: true
         }),
         copy({
             assets: [

@@ -20,30 +20,57 @@ function main() {
 
             let stars = createStars(80);
             stars.forEach(function (star) {
-                sprites.push(star);
+                sprites.items.push(star);
             });
 
             let enemies = createEnemies();
             enemies.forEach(function (enemy) {
-                sprites.push(enemy);
+                sprites.items.push(enemy);
             });
 
-            let player = createPlayer();
-            sprites.push(player);
+            let playerSprite = createPlayer();
+            sprites.items.push(playerSprite);
 
             let loop = GameLoop({
                 update() {
-                    sprites.map((sprite, index) => {
+                    sprites.items.map((sprite, index) => {
                         sprite.update();
 
-                        if (sprite.type == 'bullet' && (sprite.x < BG_BRD_L || sprite.x > BG_BRD_R || sprite.y < BG_BRD_U || sprite.y > BG_BRD_D)) {
-                            sprites.splice(index, 1);
+                        // collision detection
+                        for (let i = 0; i < sprites.items.length; i++) {
+                            if (sprites.items[i].type === 'enemy') {
+                                let enemy = sprites.items[i];
+                                for (let j = 0; j < sprites.items.length; j++) {
+                                    if (sprites.items[j].type === 'bullet' || sprites.items[j].type === 'player') {
+                                        let item = sprites.items[j];
+                                        let dx = enemy.x - item.x;
+                                        let dy = enemy.y - item.y;
+
+                                        if (Math.hypot(dx, dy) < enemy.radius + item.radius - 10) {
+                                            if (sprites.items[j].type === 'bullet') {
+                                                enemy.energy -= item.energy;
+                                                item.ttl = 0;
+                                            }
+                                            if (sprites.items[j].type === 'player') {
+                                                player.isEnable = false;
+                                                player.isDestroyed = true;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (enemy.energy <= 0) {
+                                    enemy.ttl = 0;
+                                }
+                            }
                         }
                     });
+
+                    sprites.items = sprites.items.filter(sprite => sprite.isAlive());
                 },
                 render() {
                     renderBgSpace(); // space background rendering (layer 1)
-                    sprites.map(sprite => sprite.render()); // sprites(player, stars, enemies) rendering (layer 2)
+                    sprites.items.map(sprite => sprite.render()); // sprites.items(player, stars, enemies) rendering (layer 2)
                     renderBgBorder(); // space border rendering (layer 3)
                 }
             });

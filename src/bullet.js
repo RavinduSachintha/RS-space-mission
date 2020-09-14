@@ -8,7 +8,7 @@ export function createBullet(x, y, dx, dy, color) {
         radius: 4,
         color,
         energy: 1,
-        ttl: 50,
+        ttl: 100,
         type: 'bullet'
     });
 }
