@@ -1,5 +1,6 @@
 import { Sprite, degToRad } from 'kontra';
 import { BG_SPC_H, BG_SPC_W, ENEMY_ENERGY_LVL, context, sprites } from './globals';
+import { createBullet } from './bullet';
 
 const enemyPositions = [
     [Math.round(BG_SPC_W * 0.35), Math.round(Math.random() * (BG_SPC_H - 75) + 60)],
@@ -99,6 +100,8 @@ export function createEnemies() {
             rotation: degToRad((Math.random() - 0.5) * 30),
             action: 'default',
             radius: 32,
+            range: 120,
+            isFiring: false,
             dt: 0,
             render() {
                 renderEnemy(this.action, this.radius, this.energy);
@@ -114,6 +117,15 @@ export function createEnemies() {
                 }
 
                 this.dt += 1 / 60;
+
+                if (this.isFiring && this.dt > 0.1) {
+                    let distance =  Math.hypot(sprites.player.x - this.x, sprites.player.y - this.y);
+                    let dx = (sprites.player.x - this.x) / distance;
+                    let dy = (sprites.player.y - this.y) / distance;
+                    let bullet = createBullet(this.x, this.y, dx * 4, dy * 4, '#AFA', 'enemy');
+                    sprites.bullets.push(bullet);
+                }
+
                 if (this.dt > 0.1) {
                     this.dt = 0;
                     smokeSprites(15, this.x, this.y + 15, 1, 2).forEach(smoke => sprites.smokes.push(smoke));

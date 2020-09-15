@@ -1,6 +1,6 @@
 import { Sprite } from 'kontra';
 
-export function createBullet(x, y, dx, dy, color) {
+export function createBullet(x, y, dx, dy, color, by) {
     return Sprite({
         x, y, dx, dy,
         width: 4,
@@ -9,6 +9,7 @@ export function createBullet(x, y, dx, dy, color) {
         color,
         energy: 1,
         ttl: 100,
-        type: 'bullet'
+        type: 'bullet',
+        by
     });
 }

@@ -31,26 +31,48 @@ function main() {
 
                         // collision detection with bullet
                         sprites.bullets.forEach(bullet => {
-                            if (Math.hypot(enemy.x - bullet.x, enemy.y - bullet.y) < enemy.radius + bullet.radius) {
+
+                            // player firing
+                            if (bullet.by === 'player' && Math.hypot(enemy.x - bullet.x, enemy.y - bullet.y) < enemy.radius + bullet.radius) {
                                 enemy.energy -= bullet.energy;
+                                bullet.ttl = 0;
+                            }
+
+                            // enemy firing
+                            if (bullet.by === 'enemy' && Math.hypot(sprites.player.x - bullet.x, sprites.player.y - bullet.y) < sprites.player.radius + bullet.radius) {
+                                sprites.player.energy -= bullet.energy;
                                 bullet.ttl = 0;
                             }
                         });
 
                         // collision detection with player
-                        if (Math.hypot(enemy.x - sprites.player.x, enemy.y - sprites.player.y) < enemy.radius + sprites.player.radius - 10) {
-                            sprites.player.isEnable = false;
-                            sprites.player.isDestroyed = true;
+                        let playerDist = Math.hypot(enemy.x - sprites.player.x, enemy.y - sprites.player.y);
+                        if (playerDist < enemy.range) {
+                            enemy.isFiring = true;
+
+                            if (playerDist < enemy.radius + sprites.player.radius - 10) {
+                                sprites.player.isEnable = false;
+                                sprites.player.isDestroyed = true;
+                                enemy.isFiring = false;
+                            }
+                        } else {
+                            enemy.isFiring = false;
                         }
 
                         // enemy energy check
                         if (enemy.energy <= 0) {
                             enemy.ttl = 0;
                         }
+
+                        // player energy check
+                        if (sprites.player.energy <= 0) {
+                            sprites.player.isEnable = false;
+                            sprites.player.isDestroyed = true;
+                        }
                     });
 
                     sprites.smokes.map(smoke => smoke.update());
-                    
+
                     sprites.bullets.map(bullet => bullet.update());
 
                     // check alive

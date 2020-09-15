@@ -1,5 +1,5 @@
 import { Sprite, keyPressed, degToRad } from 'kontra';
-import { BG_BRD_U, BG_BRD_D, BG_BRD_L, BG_BRD_R, sprites, context } from './globals';
+import { BG_BRD_U, BG_BRD_D, BG_BRD_L, BG_BRD_R, BG_TXT_W, sprites, context } from './globals';
 import { createBullet } from './bullet';
 
 function renderPlayer(action, radius) {
@@ -126,6 +126,7 @@ export function createPlayer() {
         isEnable: false,
         isDestroyed: false,
         maxSpeed: 3.5,
+        energy: 100,
         render() {
             renderPlayer(this.action, this.radius);
         },
@@ -140,7 +141,7 @@ export function createPlayer() {
                 this.rotation += degToRad(3) * (this.velocity.length() / this.maxSpeed);
             }
 
-            if (this.x < BG_BRD_L || this.x > BG_BRD_R || this.y < BG_BRD_U || this.y > BG_BRD_D) {
+            if (this.x < BG_BRD_L || this.x > BG_BRD_R || this.y < BG_BRD_U + BG_TXT_W || this.y > BG_BRD_D) {
                 this.isEnable = false;
                 this.isDestroyed = true;
             }
@@ -177,7 +178,7 @@ export function createPlayer() {
             this.dt += 1 / 60;
             if (keyPressed('space') && this.dt > 0.25) {
                 this.dt = 0;
-                let bullet = createBullet(this.x + cos * 25, this.y + sin * 25, this.dx + cos * 5, this.dy + sin * 5, 'yellow');
+                let bullet = createBullet(this.x + cos * 25, this.y + sin * 25, this.dx + cos * 5, this.dy + sin * 5, '#FF0', 'player');
                 sprites.bullets.push(bullet);
             }
 
