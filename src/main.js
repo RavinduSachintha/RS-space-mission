@@ -1,7 +1,7 @@
 import './styles.css';
 
 import { initKeys, GameLoop } from 'kontra';
-import { BG_BRD_L, BG_BRD_U, BG_BRD_R, BG_BRD_D, sprites, player, loadAssets, assets } from './globals';
+import { BG_BRD_L, BG_BRD_U, BG_BRD_R, BG_BRD_D, sprites, loadAssets, assets } from './globals';
 import { renderBgSpace, createStars, renderBgBorder } from './background';
 import { createPlayer } from './player';
 import { createEnemies } from './enemy';
@@ -18,60 +18,54 @@ function main() {
         if (assets.assetsLoaded == assets.numOfItems) {
             initKeys(); // keyboard events initialization
 
-            let stars = createStars(80);
-            stars.forEach(function (star) {
-                sprites.items.push(star);
-            });
-
-            let enemies = createEnemies();
-            enemies.forEach(function (enemy) {
-                sprites.items.push(enemy);
-            });
-
-            let playerSprite = createPlayer();
-            sprites.items.push(playerSprite);
+            createStars(100).forEach(star => sprites.stars.push(star));
+            createEnemies().forEach(enemy => sprites.enemies.push(enemy));
+            sprites.player = createPlayer();
 
             let loop = GameLoop({
                 update() {
-                    sprites.items.map((sprite, index) => {
-                        sprite.update();
+                    sprites.player.update();
 
-                        // collision detection
-                        for (let i = 0; i < sprites.items.length; i++) {
-                            if (sprites.items[i].type === 'enemy') {
-                                let enemy = sprites.items[i];
-                                for (let j = 0; j < sprites.items.length; j++) {
-                                    if (sprites.items[j].type === 'bullet' || sprites.items[j].type === 'player') {
-                                        let item = sprites.items[j];
-                                        let dx = enemy.x - item.x;
-                                        let dy = enemy.y - item.y;
+                    sprites.enemies.map(enemy => {
+                        enemy.update();
 
-                                        if (Math.hypot(dx, dy) < enemy.radius + item.radius - 10) {
-                                            if (sprites.items[j].type === 'bullet') {
-                                                enemy.energy -= item.energy;
-                                                item.ttl = 0;
-                                            }
-                                            if (sprites.items[j].type === 'player') {
-                                                player.isEnable = false;
-                                                player.isDestroyed = true;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                if (enemy.energy <= 0) {
-                                    enemy.ttl = 0;
-                                }
+                        // collision detection with bullet
+                        sprites.bullets.forEach(bullet => {
+                            if (Math.hypot(enemy.x - bullet.x, enemy.y - bullet.y) < enemy.radius + bullet.radius) {
+                                enemy.energy -= bullet.energy;
+                                bullet.ttl = 0;
                             }
+                        });
+
+                        // collision detection with player
+                        if (Math.hypot(enemy.x - sprites.player.x, enemy.y - sprites.player.y) < enemy.radius + sprites.player.radius - 10) {
+                            sprites.player.isEnable = false;
+                            sprites.player.isDestroyed = true;
+                        }
+
+                        // enemy energy check
+                        if (enemy.energy <= 0) {
+                            enemy.ttl = 0;
                         }
                     });
 
-                    sprites.items = sprites.items.filter(sprite => sprite.isAlive());
+                    sprites.smokes.map(smoke => smoke.update());
+                    
+                    sprites.bullets.map(bullet => bullet.update());
+
+                    // check alive
+                    sprites.enemies = sprites.enemies.filter(enemy => enemy.isAlive());
+                    sprites.bullets = sprites.bullets.filter(bullet => bullet.isAlive());
+                    sprites.smokes = sprites.smokes.filter(smoke => smoke.isAlive());
                 },
                 render() {
                     renderBgSpace(); // space background rendering (layer 1)
-                    sprites.items.map(sprite => sprite.render()); // sprites.items(player, stars, enemies) rendering (layer 2)
-                    renderBgBorder(); // space border rendering (layer 3)
+                    sprites.stars.map(star => star.render()); // stars rendering (layer 2);
+                    sprites.enemies.map(enemy => enemy.render()); // enemies rendering (layer 3);
+                    sprites.smokes.map(smoke => smoke.render());
+                    sprites.player.render(); // player rendering (layer 4);
+                    sprites.bullets.map(bullet => bullet.render()); // bullets rendering (layer 5);
+                    renderBgBorder(); // space border rendering (layer 6)
                 }
             });
 

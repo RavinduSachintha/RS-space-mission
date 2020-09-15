@@ -1,5 +1,5 @@
-import { Sprite, keyPressed, degToRad, imageAssets } from 'kontra';
-import { player, BG_BRD_U, BG_BRD_D, BG_BRD_L, BG_BRD_R, sprites, context } from './globals';
+import { Sprite, keyPressed, degToRad } from 'kontra';
+import { BG_BRD_U, BG_BRD_D, BG_BRD_L, BG_BRD_R, sprites, context } from './globals';
 import { createBullet } from './bullet';
 
 function renderPlayer(action, radius) {
@@ -7,13 +7,6 @@ function renderPlayer(action, radius) {
     radius = radius || 0;
 
     context.translate(-radius, 0);
-
-    // context.beginPath();
-    // context.arc(radius, 0, radius, 0, Math.PI * 2);
-    // context.closePath();
-    // context.lineWidth = 1;
-    // context.strokeStyle = "red";
-    // context.stroke();
 
     context.beginPath();
     context.moveTo(25, -5);
@@ -130,6 +123,9 @@ export function createPlayer() {
         radius: 24,
         dt: 0,
         action: 'default',
+        isEnable: false,
+        isDestroyed: false,
+        maxSpeed: 3.5,
         render() {
             renderPlayer(this.action, this.radius);
         },
@@ -137,16 +133,16 @@ export function createPlayer() {
             this.action = 'default';
             if (keyPressed('left')) {
                 this.action = 'turn-left';
-                this.rotation += degToRad(-3) * (this.velocity.length() / player.maxSpeed);
+                this.rotation += degToRad(-3) * (this.velocity.length() / this.maxSpeed);
             }
             if (keyPressed('right')) {
                 this.action = 'turn-right';
-                this.rotation += degToRad(3) * (this.velocity.length() / player.maxSpeed);
+                this.rotation += degToRad(3) * (this.velocity.length() / this.maxSpeed);
             }
 
             if (this.x < BG_BRD_L || this.x > BG_BRD_R || this.y < BG_BRD_U || this.y > BG_BRD_D) {
-                player.isEnable = false;
-                player.isDestroyed = true;
+                this.isEnable = false;
+                this.isDestroyed = true;
             }
 
             const cos = Math.cos(this.rotation);
@@ -154,15 +150,15 @@ export function createPlayer() {
 
             // should change later
             if (keyPressed('s')) {
-                player.isEnable = true;
-                player.isDestroyed = false;
+                this.isEnable = true;
+                this.isDestroyed = false;
             }
 
             if (keyPressed('d')) {
-                player.isEnable = false;
+                this.isEnable = false;
             }
 
-            if (player.isEnable) {
+            if (this.isEnable) {
                 this.ddx = cos * 0.05;
                 this.ddy = sin * 0.05;
             } else {
@@ -173,7 +169,7 @@ export function createPlayer() {
             }
             this.advance();
 
-            if (this.velocity.length() > player.maxSpeed) {
+            if (this.velocity.length() > this.maxSpeed) {
                 this.dx *= 0.95;
                 this.dy *= 0.95;
             }
@@ -182,10 +178,10 @@ export function createPlayer() {
             if (keyPressed('space') && this.dt > 0.25) {
                 this.dt = 0;
                 let bullet = createBullet(this.x + cos * 25, this.y + sin * 25, this.dx + cos * 5, this.dy + sin * 5, 'yellow');
-                sprites.items.push(bullet);
+                sprites.bullets.push(bullet);
             }
 
-            if (player.isDestroyed) {
+            if (this.isDestroyed) {
                 this.action = 'destroyed';
             }
         }
