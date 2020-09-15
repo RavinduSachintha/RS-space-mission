@@ -1,5 +1,5 @@
 {
-    "name": "rs404",
+    "name": "rs-space-mission",
     "version": "1.0.0",
     "description": "A web based game",
     "main": "src/main.js",
