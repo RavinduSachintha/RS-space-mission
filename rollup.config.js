@@ -18,7 +18,7 @@ export default {
     input: 'src/main.js',
     output: {
         name: 'gameBundle',
-        dir: 'dist',
+        dir: 'docs',
         format: 'iife'
     },
     plugins: [

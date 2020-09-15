@@ -6,7 +6,7 @@
     "scripts": {
         "build": "rollup -c",
         "dev": "rollup -c --watch",
-        "reload": "livereload 'dist/'",
+        "reload": "livereload 'docs/'",
         "watch": "npm-run-all --parallel reload dev"
     },
     "keywords": [
