@@ -5,17 +5,19 @@ import { init, load, on } from 'kontra';
 export const { canvas, context } = init("canvas1");
 
 // background border related
-export const BG_BRD_W = 5; // border width
-export const BG_BRD_OFS = 30; // border offset for sprites
-export const BG_BRD_L = BG_BRD_W; // border left margin
-export const BG_BRD_R = canvas.width - BG_BRD_W; // border right margin
-export const BG_BRD_U = BG_BRD_W; // border up margin
-export const BG_BRD_D = canvas.height - BG_BRD_W; // border down margin
+export let gameWindow = {
+    BG_BRD_W: 5, // border width
+    BG_BRD_OFS: 30, // border offset for sprites
+    BG_BRD_L: 5, // border left margin
+    BG_BRD_R: canvas.width - 5, // border right margin
+    BG_BRD_U: 5, // border up margin
+    BG_BRD_D: canvas.height - 5, // border down margin
 
-export const BG_TXT_W = 20; // user text area width
+    BG_TXT_W: 20, // user text area width
 
-export const BG_SPC_W = BG_BRD_R - BG_BRD_L;
-export const BG_SPC_H = BG_BRD_D - BG_BRD_U;
+    BG_SPC_W: canvas.width - 10,
+    BG_SPC_H: canvas.height - 10
+};
 
 export const ENEMY_ENERGY_LVL = 20;
 

@@ -1,10 +1,10 @@
 import { Button } from 'kontra';
-import { BG_BRD_R, BG_TXT_W, BG_BRD_W, sprites, context, canvas } from './globals';
+import { gameWindow, sprites, context, canvas } from './globals';
 
 export function startButton() {
     return Button({
-        x: BG_BRD_R - 80,
-        y: BG_TXT_W - BG_BRD_W,
+        x: gameWindow.BG_BRD_R - 80,
+        y: gameWindow.BG_TXT_W - gameWindow.BG_BRD_W,
         anchor: { x: 0.5, y: 0.5 },
 
         text: {
@@ -54,4 +54,50 @@ function convertLifeTime(lifeTime) {
     if (seconds < 10) { seconds = "0" + seconds };
     if (frames < 10) { frames = "0" + frames };
     return minutes + ':' + seconds + ':' + frames;
+}
+
+export function fullScreenButton() {
+    return Button({
+        x: gameWindow.BG_BRD_R - 201,
+        y: gameWindow.BG_TXT_W - gameWindow.BG_BRD_W,
+        anchor: { x: 0.5, y: 0.5 },
+
+        text: {
+            text: 'Full Screen',
+            color: 'white',
+            font: '12px Arial, sans-serif',
+            anchor: { x: 0.05, y: 0.45 }
+        },
+
+        onUp() {
+            if (canvas.requestFullscreen) {
+                canvas.requestFullscreen();
+                canvas.width = screen.width;
+                canvas.height = screen.height;
+            } else if (canvas.mozRequestFullScreen) { /* Firefox */
+                canvas.mozRequestFullScreen();
+            } else if (canvas.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                canvas.webkitRequestFullscreen();
+            } else if (canvas.msRequestFullscreen) { /* IE/Edge */
+                canvas.msRequestFullscreen();
+            }
+        },
+
+        render() {
+            context.translate(0, 0);
+            context.beginPath();
+            context.rect(0, -4, 115, 20);
+            context.closePath();
+            context.fillStyle = "#000";
+            context.fill();
+
+            if (this.hovered) {
+                this.textNode.color = 'skyblue';
+                canvas.style.cursor = 'pointer';
+            } else {
+                this.textNode.color = 'white';
+                canvas.style.cursor = 'initial';
+            }
+        }
+    });
 }

@@ -1,11 +1,11 @@
 import { Sprite, degToRad } from 'kontra';
-import { BG_SPC_H, BG_SPC_W, ENEMY_ENERGY_LVL, context, sprites } from './globals';
+import { gameWindow, ENEMY_ENERGY_LVL, context, sprites } from './globals';
 import { createBullet } from './bullet';
 
 const enemyPositions = [
-    [Math.round(BG_SPC_W * 0.35), Math.round(Math.random() * (BG_SPC_H - 75) + 60)],
-    [Math.round(BG_SPC_W * 0.6), Math.round(Math.random() * (BG_SPC_H - 75) + 60)],
-    [Math.round(BG_SPC_W * 0.9), Math.round(Math.random() * (BG_SPC_H - 75) + 60)],
+    [Math.round(gameWindow.BG_SPC_W * 0.35), Math.round(Math.random() * (gameWindow.BG_SPC_H - 75) + 60)],
+    [Math.round(gameWindow.BG_SPC_W * 0.6), Math.round(Math.random() * (gameWindow.BG_SPC_H - 75) + 60)],
+    [Math.round(gameWindow.BG_SPC_W * 0.9), Math.round(Math.random() * (gameWindow.BG_SPC_H - 75) + 60)],
 ];
 
 function renderEnemy(action, radius, energy) {

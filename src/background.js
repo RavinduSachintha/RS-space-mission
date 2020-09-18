@@ -1,26 +1,26 @@
 import { Sprite } from 'kontra';
-import { context, BG_BRD_L, BG_BRD_U, BG_BRD_R, BG_BRD_D, BG_BRD_W, BG_TXT_W } from './globals';
+import { context, gameWindow } from './globals';
 
 export function renderBgSpace() {
-    let gradient = context.createLinearGradient((BG_BRD_R - BG_BRD_L) / 2, BG_BRD_U + 10, (BG_BRD_R - BG_BRD_L) / 2, BG_BRD_D);
+    let gradient = context.createLinearGradient((gameWindow.BG_BRD_R - gameWindow.BG_BRD_L) / 2, gameWindow.BG_BRD_U + 10, (gameWindow.BG_BRD_R - gameWindow.BG_BRD_L) / 2, gameWindow.BG_BRD_D);
     gradient.addColorStop(0, "#070B34");
     gradient.addColorStop(1, '#854088');
     context.fillStyle = gradient;
-    context.fillRect(BG_BRD_L, BG_BRD_U + BG_TXT_W, BG_BRD_R - BG_BRD_L, BG_BRD_D - BG_BRD_U - BG_TXT_W);
+    context.fillRect(gameWindow.BG_BRD_L, gameWindow.BG_BRD_U + gameWindow.BG_TXT_W, gameWindow.BG_BRD_R - gameWindow.BG_BRD_L, gameWindow.BG_BRD_D - gameWindow.BG_BRD_U - gameWindow.BG_TXT_W);
 }
 
 export function renderBgBorder() {
     // ------- user-panel.js file background start ---------
     context.fillStyle = '#FFF';
-    context.fillRect(BG_BRD_L, BG_BRD_U, BG_BRD_R - BG_BRD_L, BG_TXT_W);
+    context.fillRect(gameWindow.BG_BRD_L, gameWindow.BG_BRD_U, gameWindow.BG_BRD_R - gameWindow.BG_BRD_L, gameWindow.BG_TXT_W);
     // -------  user-panel.js file background end  ---------
 
-    let gradient = context.createRadialGradient((BG_BRD_R - BG_BRD_L) / 2, (BG_BRD_D - BG_BRD_U) / 2, 100, (BG_BRD_R - BG_BRD_L) / 2, (BG_BRD_D - BG_BRD_U) / 2, (BG_BRD_R - BG_BRD_L) / 2 + 300);
+    let gradient = context.createRadialGradient((gameWindow.BG_BRD_R - gameWindow.BG_BRD_L) / 2, (gameWindow.BG_BRD_D - gameWindow.BG_BRD_U) / 2, 100, (gameWindow.BG_BRD_R - gameWindow.BG_BRD_L) / 2, (gameWindow.BG_BRD_D - gameWindow.BG_BRD_U) / 2, (gameWindow.BG_BRD_R - gameWindow.BG_BRD_L) / 2 + 300);
     gradient.addColorStop(0, '#FFF');
     gradient.addColorStop(1, '#000');
     context.strokeStyle = gradient;
-    context.lineWidth = BG_BRD_W;
-    context.strokeRect(BG_BRD_L / 2, BG_BRD_U / 2, BG_BRD_R, BG_BRD_D);
+    context.lineWidth = gameWindow.BG_BRD_W;
+    context.strokeRect(gameWindow.BG_BRD_L / 2, gameWindow.BG_BRD_U / 2, gameWindow.BG_BRD_R, gameWindow.BG_BRD_D);
 }
 
 function renderStar() {
@@ -46,8 +46,8 @@ export function createStars(count) {
     let starsList = [];
     for (let i = 0; i < count; i++) {
         const star = Sprite({
-            x: (Math.random() * (BG_BRD_R - BG_BRD_L - 75)) + 50,
-            y: (Math.random() * (BG_BRD_D - BG_BRD_U - 75)) + 50,
+            x: (Math.random() * (gameWindow.BG_BRD_R - gameWindow.BG_BRD_L - 75)) + 50,
+            y: (Math.random() * (gameWindow.BG_BRD_D - gameWindow.BG_BRD_U - 75)) + 50,
             type: 'star',
             opacity: Math.random() * 0.4,
             scaleX: 0.2,

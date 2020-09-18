@@ -5,7 +5,7 @@ import { sprites, loadAssets, assets } from './globals';
 import { renderBgSpace, createStars, renderBgBorder } from './background';
 import { createPlayer } from './player';
 import { createEnemies } from './enemy';
-import { startButton } from './user-panel';
+import { startButton, fullScreenButton } from './user-panel';
 
 // should remove at final build -------------------------------
 document.write('<script src="http://'
@@ -25,6 +25,7 @@ function main() {
             sprites.player = createPlayer();
 
             let startBtnObj = startButton();
+            let fullScreenBtnObj = fullScreenButton();
 
             let loop = GameLoop({
                 update() {
@@ -93,6 +94,7 @@ function main() {
                     sprites.bullets.map(bullet => bullet.render()); // bullets rendering (layer 5);
                     renderBgBorder(); // space border rendering (layer 6)
                     startBtnObj.render();
+                    fullScreenBtnObj.render();
                 }
             });
 

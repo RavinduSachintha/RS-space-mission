@@ -1,5 +1,5 @@
 import { Sprite, keyPressed, degToRad } from 'kontra';
-import { BG_BRD_U, BG_BRD_D, BG_BRD_L, BG_BRD_R, BG_TXT_W, sprites, context } from './globals';
+import { gameWindow, sprites, context } from './globals';
 import { createBullet } from './bullet';
 
 function renderPlayer(action, radius) {
@@ -117,7 +117,7 @@ function renderPlayer(action, radius) {
 export function createPlayer() {
     return Sprite({
         x: 50,
-        y: (BG_BRD_D - BG_BRD_U) / 2,
+        y: (gameWindow.BG_BRD_D - gameWindow.BG_BRD_U) / 2,
         type: 'player',
         anchor: { x: 0.5, y: 0.5 },
         radius: 24,
@@ -142,7 +142,7 @@ export function createPlayer() {
                 this.rotation += degToRad(3) * (this.velocity.length() / this.maxSpeed);
             }
 
-            if (this.x < BG_BRD_L || this.x > BG_BRD_R || this.y < BG_BRD_U + BG_TXT_W || this.y > BG_BRD_D) {
+            if (this.x < gameWindow.BG_BRD_L || this.x > gameWindow.BG_BRD_R || this.y < gameWindow.BG_BRD_U + gameWindow.BG_TXT_W || this.y > gameWindow.BG_BRD_D) {
                 this.isEnable = false;
                 this.isDestroyed = true;
             }
