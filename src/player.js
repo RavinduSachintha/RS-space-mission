@@ -127,6 +127,7 @@ export function createPlayer() {
         isDestroyed: false,
         maxSpeed: 3.5,
         energy: 100,
+        lifeTime: 0,
         render() {
             renderPlayer(this.action, this.radius);
         },
@@ -149,19 +150,10 @@ export function createPlayer() {
             const cos = Math.cos(this.rotation);
             const sin = Math.sin(this.rotation);
 
-            // should change later
-            if (keyPressed('s')) {
-                this.isEnable = true;
-                this.isDestroyed = false;
-            }
-
-            if (keyPressed('d')) {
-                this.isEnable = false;
-            }
-
             if (this.isEnable) {
                 this.ddx = cos * 0.05;
                 this.ddy = sin * 0.05;
+                this.lifeTime++;
             } else {
                 this.ddx = 0;
                 this.ddy = 0;

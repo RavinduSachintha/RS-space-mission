@@ -1,10 +1,11 @@
 import './styles.css';
 
-import { initKeys, GameLoop } from 'kontra';
-import { BG_BRD_L, BG_BRD_U, BG_BRD_R, BG_BRD_D, sprites, loadAssets, assets } from './globals';
+import { initKeys, GameLoop, initPointer } from 'kontra';
+import { sprites, loadAssets, assets } from './globals';
 import { renderBgSpace, createStars, renderBgBorder } from './background';
 import { createPlayer } from './player';
 import { createEnemies } from './enemy';
+import { startButton } from './user-panel';
 
 // should remove at final build -------------------------------
 document.write('<script src="http://'
@@ -17,10 +18,13 @@ function main() {
     loadAssets().then(function () {
         if (assets.assetsLoaded == assets.numOfItems) {
             initKeys(); // keyboard events initialization
+            initPointer(); // pointer events initialization
 
             createStars(100).forEach(star => sprites.stars.push(star));
             createEnemies().forEach(enemy => sprites.enemies.push(enemy));
             sprites.player = createPlayer();
+
+            let startBtnObj = startButton();
 
             let loop = GameLoop({
                 update() {
@@ -88,6 +92,7 @@ function main() {
                     sprites.player.render(); // player rendering (layer 4);
                     sprites.bullets.map(bullet => bullet.render()); // bullets rendering (layer 5);
                     renderBgBorder(); // space border rendering (layer 6)
+                    startBtnObj.render();
                 }
             });
 

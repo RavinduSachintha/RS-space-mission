@@ -10,8 +10,10 @@ export function renderBgSpace() {
 }
 
 export function renderBgBorder() {
+    // ------- user-panel.js file background start ---------
     context.fillStyle = '#FFF';
     context.fillRect(BG_BRD_L, BG_BRD_U, BG_BRD_R - BG_BRD_L, BG_TXT_W);
+    // -------  user-panel.js file background end  ---------
 
     let gradient = context.createRadialGradient((BG_BRD_R - BG_BRD_L) / 2, (BG_BRD_D - BG_BRD_U) / 2, 100, (BG_BRD_R - BG_BRD_L) / 2, (BG_BRD_D - BG_BRD_U) / 2, (BG_BRD_R - BG_BRD_L) / 2 + 300);
     gradient.addColorStop(0, '#FFF');

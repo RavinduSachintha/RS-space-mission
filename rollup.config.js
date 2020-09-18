@@ -40,7 +40,7 @@ export default {
             showBeforeSizes: false
         }),
         html({
-            title: 'RS404',
+            title: 'RS-space-mission',
             template
         }),
         postcss({
@@ -50,14 +50,15 @@ export default {
         kontra({
             gameObject: {
                 acceleration: true,
+                anchor: true,
+                group: true,
+                opacity: true,
+                rotation: true,
+                ttl: true,
                 velocity: true,
-                rotation: true
             },
             vector: {
                 length: true
-            },
-            sprite: {
-                image: true
             },
             debug: true
         }),
