@@ -62,9 +62,7 @@ export default {
             debug: true
         }),
         copy({
-            assets: [
-                'assets/enemy.png'
-            ]
+            assets: []
         }),
         zip()
     ]

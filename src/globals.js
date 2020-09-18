@@ -28,7 +28,7 @@ export let sprites = {
 };
 
 export let assets = {
-    numOfItems: 1,
+    numOfItems: 0,
     assetsLoaded: 0
 };
 
@@ -37,5 +37,5 @@ on('assetLoaded', (asset, url) => {
 });
 
 export function loadAssets() {
-    return load('assets/enemy.png');
+    return load();
 }

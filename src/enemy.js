@@ -16,6 +16,12 @@ function renderEnemy(action, radius, energy) {
     context.translate(-radius, 0);
 
     context.beginPath();
+    context.ellipse(radius, 10, 14, 8, 0, 0, Math.PI * 2);
+    context.closePath();
+    context.fillStyle = "#FFA500";
+    context.fill();
+
+    context.beginPath();
     context.ellipse(radius, -8, 12, 12, 0, 0, Math.PI * 2);
     context.closePath();
     context.fillStyle = "#FF0";
@@ -27,6 +33,36 @@ function renderEnemy(action, radius, energy) {
     context.closePath();
     context.strokeStyle = "#080";
     context.stroke();
+
+    context.beginPath();
+    context.moveTo(12, 0);
+    context.lineTo(4, -20);
+    context.lineTo(6, -20);
+    context.lineTo(20, 0);
+    context.closePath();
+    context.fillStyle = "#080";
+    context.fill();
+
+    context.beginPath();
+    context.arc(5, -20, 2, 0, Math.PI * 2);
+    context.closePath();
+    context.fillStyle = "#FFA500";
+    context.fill();
+
+    context.beginPath();
+    context.moveTo(52, 0);
+    context.lineTo(60, -20);
+    context.lineTo(58, -20);
+    context.lineTo(44, 0);
+    context.closePath();
+    context.fillStyle = "#080";
+    context.fill();
+
+    context.beginPath();
+    context.arc(59, -20, 2, 0, Math.PI * 2);
+    context.closePath();
+    context.fillStyle = "#FFA500";
+    context.fill();
 
     context.beginPath();
     context.ellipse(radius, 0, 32, 12, 0, 0, Math.PI * 2);
