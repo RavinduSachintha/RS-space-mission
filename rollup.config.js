@@ -40,7 +40,7 @@ export default {
             showBeforeSizes: false
         }),
         html({
-            title: 'RS-space-mission',
+            title: 'RS - Space Mission',
             template
         }),
         postcss({
